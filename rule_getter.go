@@ -41,10 +41,7 @@ func (rg *ruleGetter) getRule(ctx context.Context, r *cloudwatchevents.Rule) (*R
 			return nil, nil
 		}
 		target := &Target{TargetID: targetID}
-
-		if role := *t.RoleArn; role != rg.roleArn {
-			target.Role = strings.TrimPrefix(role, rg.roleArnPrefix)
-		}
+		target.Role = strings.TrimPrefix(*t.RoleArn, rg.roleArnPrefix)
 
 		taskCount := *ecsParams.TaskCount
 		if taskCount != 1 {
